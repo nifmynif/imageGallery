@@ -10,6 +10,8 @@ public class ImageHandler {
 
     private Image prev;
     private Image cur;
+    private Image next;
+    private int position;
 
     public HashMap<String, Image> getImages() {
         return images;
@@ -38,6 +40,4 @@ public class ImageHandler {
     public void setNext(Image next) {
         this.next = next;
     }
-
-    private Image next;
 }

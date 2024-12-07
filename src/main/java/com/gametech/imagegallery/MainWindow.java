@@ -11,6 +11,7 @@ public class MainWindow {
     public ImageView prev;
     public ImageView cur;
     public ImageView next;
+    public Button add;
 
     @FXML
     public void initialize() {

@@ -4,14 +4,13 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class ImageController {
-    public ImageHandler images;
     private static ImageController imageController;
+    public ImageHandler images;
 
     private ImageController() {
         this.images = new ImageHandler();
