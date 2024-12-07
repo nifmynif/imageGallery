@@ -6,14 +6,12 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.Set;
 
 public class ImageController {
     private static ImageController imageController;
-    public ImageHandler images;
+    public static final ImageHandler images = new ImageHandler();
 
-    private ImageController() {
-        this.images = new ImageHandler();
+    public ImageController() {
         initialize();
     }
 
@@ -27,8 +25,8 @@ public class ImageController {
         File folder = new File("assets");
         Arrays.stream(Objects.requireNonNull(folder.listFiles()))
                 .forEach(file -> {
+                    checkImage(file);
                     try {
-                        checkImage(file);
                         images.getImages().put(file.getName(), new Image(file.toURI().toURL().toExternalForm()));
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
