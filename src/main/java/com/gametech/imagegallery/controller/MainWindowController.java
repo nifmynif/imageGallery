@@ -13,16 +13,29 @@ public class MainWindowController {
     public ImageView cur;
     public ImageView next;
     public Button add;
+    private ImagesHandler imagesHandler;
 
     @FXML
     public void initialize() {
         ImageController imageController = new ImageController();
-        ImagesHandler imagesHandler = imageController.getImage();
+        imagesHandler = imageController.getImage();
         searchButton.setOnAction(event -> {
             imageController.getImage(searchField.getText());
-            prev.setImage(imagesHandler.getPrev().getImage());
-            cur.setImage(imagesHandler.getCur().getImage());
-            next.setImage(imagesHandler.getNext().getImage());
+            updateImages();
         });
+        next.setOnMouseClicked(event -> {
+            imageController.getImage(imagesHandler.getNext().getName());
+            updateImages();
+        });
+        prev.setOnMouseClicked(event -> {
+            imageController.getImage(imagesHandler.getPrev().getName());
+            updateImages();
+        });
+    }
+
+    private void updateImages() {
+        prev.setImage(imagesHandler.getPrev().getImage());
+        cur.setImage(imagesHandler.getCur().getImage());
+        next.setImage(imagesHandler.getNext().getImage());
     }
 }
