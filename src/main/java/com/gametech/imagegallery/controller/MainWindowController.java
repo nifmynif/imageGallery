@@ -1,11 +1,12 @@
-package com.gametech.imagegallery;
+package com.gametech.imagegallery.controller;
 
+import com.gametech.imagegallery.module.ImagesHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-public class MainWindow {
+public class MainWindowController {
     public TextField searchField;
     public Button searchButton;
     public ImageView prev;
@@ -15,13 +16,13 @@ public class MainWindow {
 
     @FXML
     public void initialize() {
-        ImageController imageController = ImageController.getImageController();
-        ImageHandler imageHandler = imageController.images;
+        ImageController imageController = new ImageController();
+        ImagesHandler imagesHandler = imageController.getImage();
         searchButton.setOnAction(event -> {
             imageController.getImage(searchField.getText());
-            prev.setImage(imageHandler.getPrev());
-            cur.setImage(imageHandler.getCur());
-            next.setImage(imageHandler.getNext());
+            prev.setImage(imagesHandler.getPrev().getImage());
+            cur.setImage(imagesHandler.getCur().getImage());
+            next.setImage(imagesHandler.getNext().getImage());
         });
     }
 }

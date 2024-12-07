@@ -9,4 +9,8 @@ module com.gametech.imagegallery {
 
     opens com.gametech.imagegallery to javafx.fxml;
     exports com.gametech.imagegallery;
+    exports com.gametech.imagegallery.controller;
+    opens com.gametech.imagegallery.controller to javafx.fxml;
+    exports com.gametech.imagegallery.module;
+    opens com.gametech.imagegallery.module to javafx.fxml;
 }

@@ -1,24 +1,19 @@
-package com.gametech.imagegallery;
+package com.gametech.imagegallery.controller;
 
-import javafx.scene.image.Image;
+import com.gametech.imagegallery.ImageService;
+import com.gametech.imagegallery.module.ImagesHandler;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.OptionalInt;
 
 public class ImageController {
-    private static ImageController imageController;
-    public static final ImageHandler images = new ImageHandler();
+    public static final ImageService imageService = new ImageService();
 
     public ImageController() {
         initialize();
-    }
-
-    public static ImageController getImageController() {
-        if (imageController == null)
-            imageController = new ImageController();
-        return imageController;
     }
 
     public void initialize() {
@@ -27,7 +22,7 @@ public class ImageController {
                 .forEach(file -> {
                     checkImage(file);
                     try {
-                        images.getImages().put(file.getName(), new Image(file.toURI().toURL().toExternalForm()));
+                        imageService.addImage(file);
                     } catch (MalformedURLException e) {
                         throw new RuntimeException(e);
                     }
@@ -35,7 +30,14 @@ public class ImageController {
     }
 
     public void getImage(String fileName) {
-        images.setCur(images.getImages().get(fileName));
+        OptionalInt index = imageService.getIndexByFileName(fileName);
+        if (index.isPresent()) {
+            imageService.setCur(imageService.getImageByIndex(index.getAsInt()));
+            if (index.getAsInt() - 1 >= 0)
+                imageService.setPrev(imageService.getImageByIndex(index.getAsInt() - 1));
+            if (index.getAsInt() + 1 < imageService.size())
+                imageService.setNext(imageService.getImageByIndex(index.getAsInt() + 1));
+        }
     }
 
     private void checkImage(File file) throws IllegalArgumentException {
@@ -48,5 +50,9 @@ public class ImageController {
                 !fileName.endsWith(".jpeg") &&
                 !fileName.endsWith(".png"))
             throw new IllegalArgumentException("Это не картинка: " + fileName);
+    }
+
+    public ImagesHandler getImage() {
+        return imageService.getImage();
     }
 }
